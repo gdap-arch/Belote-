@@ -53,7 +53,8 @@ if(ios&&!std)setTimeout(banner,2500);
 try{if('serviceWorker' in navigator&&location.protocol==='https:'&&loc)navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}
 const val=c=>G.tr===4?vTA[c.r]:G.tr===5?vSA[c.r]:c.s===G.tr?vT[c.r]:vP[c.r];
 const st=c=>G.tr===4?sT[c.r]:G.tr===5?sP[c.r]:c.s===G.tr?10+sT[c.r]:sP[c.r];
-const sortH=h=>h.sort((a,b)=>(a.s*20+(G.tr===4||a.s===G.tr?sT[a.r]:sP[a.r]))-(b.s*20+(G.tr===4||b.s===G.tr?sT[b.r]:sP[b.r])));
+const sOrd=h=>{const p=[...new Set(h.map(c=>c.s))],b=p.filter(s=>s==0||s==3),r=p.filter(s=>s==1||s==2),o=[];const x=b.length>=r.length?b:r,y=x===b?r:b;while(x.length||y.length){if(x.length)o.push(x.shift());if(y.length)o.push(y.shift())}return o};
+const sortH=h=>{const o=sOrd(h);return h.sort((a,b)=>(o.indexOf(a.s)*20+(G.tr===4||a.s===G.tr?sT[a.r]:sP[a.r]))-(o.indexOf(b.s)*20+(G.tr===4||b.s===G.tr?sT[b.r]:sP[b.r])))};
 function winner(tr){let b=tr[0];const ls=tr[0].c.s,k=e=>G.tr>3?(e.c.s===ls?(G.tr==4?sT:sP)[e.c.r]:-1):e.c.s===G.tr?100+sT[e.c.r]:e.c.s===ls?sP[e.c.r]:-1;for(const e of tr)if(k(e)>k(b))b=e;return b}
 function legal(h,tr,seat){if(!tr.length)return h;const ls=tr[0].c.s,same=h.filter(c=>c.s===ls);
  if(G.tr>3){if(!same.length)return h;if(G.tr==5)return same;const b2=Math.max(...tr.filter(e=>e.c.s===ls).map(e=>sT[e.c.r])),hi2=same.filter(c=>sT[c.r]>b2);return hi2.length?hi2:same}
